@@ -1,0 +1,14 @@
+# Nix
+result
+
+# exercism
+.exercism
+
+# Ignore
+erlang/*
+!erlang/.gitignore
+!erlang/.envrc
+
+elixir/*
+!elixir/.gitignore
+!elixir/.envrc
