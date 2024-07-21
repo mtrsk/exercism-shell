@@ -1,17 +1,14 @@
-.eunit
-*.o
-*.beam
-*.plt
-erl_crash.dump
-.concrete/DEV_MODE
+# Nix
+result
 
-# rebar 2.x
-.rebar
-rel/example_project
-ebin/*.beam
-deps
+# exercism
+.exercism
 
-# rebar 3
-.rebar3
-_build/
-_checkouts/
+# Ignore
+erlang/*
+!erlang/.gitignore
+!erlang/.envrc
+
+elixir/*
+!elixir/.gitignore
+!elixir/.envrc
