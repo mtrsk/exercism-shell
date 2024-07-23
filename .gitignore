@@ -12,3 +12,7 @@ erlang/*
 elixir/*
 !elixir/.gitignore
 !elixir/.envrc
+
+haskell/*
+!haskell/.gitignore
+!haskell/.envrc
