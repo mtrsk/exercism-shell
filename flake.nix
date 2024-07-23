@@ -126,6 +126,29 @@
             ];
           };
 
+          # Haskell Environment
+          # `nix develop .#haskell`
+          haskell = devenv.lib.mkShell {
+            inherit inputs pkgs;
+            modules = [
+              ({ pkgs, lib, ... }: {
+                packages = with pkgs; [
+                  exercism
+                ];
+
+                languages.haskell = {
+                  enable = true;
+                };
+
+                enterShell = ''
+                  echo "Starting Haskell environment..."
+                  exercism version
+                '';
+              })
+            ];
+          };
+
+
         });
     };
 }
