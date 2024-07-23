@@ -23,9 +23,20 @@ direnv: loading ~/<YOUR_PATH>/.envrc
 direnv: using flake .#erlang --impure
 direnv: nix-direnv: Using cached dev shell
 Starting Erlang environment...
-<...>
+# <...>
 $ exercism download --track=erlang --exercise=difference-of-squares
 
 Downloaded to
 /<YOUR_PATH>/exercism/erlang/difference-of-squares
+```
+now just solve your exercise,
+```shell
+# <...>
+$ cd difference-of-squares
+# <...>
+$ rebar3 eunit
+# <...>
+# =======================================================
+#  All 9 tests passed.
+$ exercism submit src/difference_of_squares.erl  
 ```
