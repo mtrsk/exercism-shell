@@ -13,6 +13,10 @@ elixir/*
 !elixir/.gitignore
 !elixir/.envrc
 
+fsharp/*
+!fsharp/.gitignore
+!fsharp/.envrc
+
 haskell/*
 !haskell/.gitignore
 !haskell/.envrc

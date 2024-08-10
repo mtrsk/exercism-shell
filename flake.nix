@@ -9,8 +9,18 @@
 
   outputs = { self, nixpkgs, devenv, ... } @ inputs:
     let
+      # System types to support.
       systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-      forAllSystems = f: builtins.listToAttrs (map (name: { inherit name; value = f name; }) systems);
+
+      # Helper function to generate an attrset '{ x86_64-linux = f "x86_64-linux"; ... }'.
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+
+      # Nixpkgs instantiated for supported system types.
+      nixpkgsFor = forAllSystems (system: import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      });
+
       getErlangLibs = erlangPkg: 
         let
             erlangPath = "${erlangPkg}/lib/erlang/lib/";
@@ -34,7 +44,6 @@
             launcher = launcher;
         };
 
-
       mkEnvVars = pkgs: erlangLatest: erlangLibs: raylib: {
         LOCALE_ARCHIVE = pkgs.lib.optionalString pkgs.stdenv.isLinux "${pkgs.glibcLocales}/lib/locale/locale-archive";
         LANG = "en_US.UTF-8";
@@ -55,7 +64,7 @@
     {
       devShells = forAllSystems (system:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = nixpkgsFor."${system}";
 
           # Erlang shit
           erlangLatest = pkgs.erlang_26;
@@ -63,6 +72,12 @@
 
           # Elixir
           elixirLibs = getElixirLibs pkgs.elixir-ls;
+
+          # F#
+          dotnet_8 = with pkgs.dotnetCorePackages; combinePackages [
+            sdk_8_0
+          ];
+
         in
         {
           # `nix develop .#ci`
@@ -126,6 +141,35 @@
             ];
           };
 
+          # F# Environment
+          # `nix develop .#fsharp`
+          fsharp = devenv.lib.mkShell {
+            inherit inputs pkgs;
+            modules = [
+              ({ pkgs, lib, ... }: {
+                packages = with pkgs; [
+                  exercism
+
+                  # .Net
+                  icu
+                  netcoredbg
+                  fsautocomplete
+                  fantomas
+                ];
+
+                languages.dotnet = {
+                  enable = true;
+                  packages = dotnet_8;
+                };
+
+                enterShell = ''
+                  echo "Starting F# environment..."
+                  exercism version
+                '';
+              })
+            ];
+          };
+
           # Haskell Environment
           # `nix develop .#haskell`
           haskell = devenv.lib.mkShell {
@@ -138,6 +182,11 @@
 
                 languages.haskell = {
                   enable = true;
+
+      dotnet_8 = with pkgs.dotnetCorePackages; combinePackages [
+        sdk_8_0
+      ];
+
                 };
 
                 enterShell = ''
