@@ -159,7 +159,7 @@
 
                 languages.dotnet = {
                   enable = true;
-                  packages = dotnet_8;
+                  package = dotnet_8;
                 };
 
                 enterShell = ''
@@ -182,11 +182,6 @@
 
                 languages.haskell = {
                   enable = true;
-
-      dotnet_8 = with pkgs.dotnetCorePackages; combinePackages [
-        sdk_8_0
-      ];
-
                 };
 
                 enterShell = ''
