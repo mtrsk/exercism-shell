@@ -3,6 +3,7 @@
 This is a nix shell for reproducible exercism in multiple languages. This is all the tooling you need:
 
 - [Nix](https://nixos.org/)
+- [direnv](https://direnv.net/)
 
 ## Usage
 
