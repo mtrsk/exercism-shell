@@ -17,6 +17,10 @@ fsharp/*
 !fsharp/.gitignore
 !fsharp/.envrc
 
+gleam/*
+!gleam/.gitignore
+!gleam/.envrc
+
 haskell/*
 !haskell/.gitignore
 !haskell/.envrc
