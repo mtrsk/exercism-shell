@@ -41,3 +41,12 @@ $ rebar3 eunit
 #  All 9 tests passed.
 $ exercism submit src/difference_of_squares.erl  
 ```
+
+## Supported Languages
+
+1. Elixir
+2. Erlang
+3. F#
+4. Gleam
+5. Haskell
+

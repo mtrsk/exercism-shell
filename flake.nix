@@ -170,6 +170,28 @@
             ];
           };
 
+          # Gleam Environment
+          # `nix develop .#gleam`
+          gleam = devenv.lib.mkShell {
+            inherit inputs pkgs;
+            modules = [
+              ({ pkgs, lib, ... }: {
+                packages = with pkgs; [
+                  exercism
+                ];
+
+                languages.gleam = {
+                  enable = true;
+                };
+
+                enterShell = ''
+                  echo "Starting Gleam environment..."
+                  exercism version
+                '';
+              })
+            ];
+          };
+
           # Haskell Environment
           # `nix develop .#haskell`
           haskell = devenv.lib.mkShell {
